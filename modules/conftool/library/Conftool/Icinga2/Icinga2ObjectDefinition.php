@@ -374,7 +374,6 @@ class Icinga2ObjectDefinition
                             'command' => $host_notification_command_name,
                             'host_name' => (string) $object
                         );
-                        //TODO migrate notification_options
 
                         $this->notifications($notification_object_name, $notification_object_attr);
 
@@ -424,8 +423,6 @@ class Icinga2ObjectDefinition
                             //if there is no direct relation, we need to specify the service.name as additional assign rule
                             $notification_object_attr['service_assign'] = (string) $object;
                         }
-
-                        //TODO migrate notification_options
 
                         $this->notifications($notification_object_name, $notification_object_attr);
 
@@ -834,7 +831,7 @@ class Icinga2ObjectDefinition
             else {
                 if ($obj_type == "apply") {
                     if (array_key_exists('service_assign', $notification_attr)) {
-                        $str .= sprintf("    assign where %s\n", $notification_attr['service_assign']);
+                        $str .= sprintf("    assign where service.name == \"%s\"\n", $notification_attr['service_assign']);
                     }
                     $this->getAssignmentsAsString();
                 }
