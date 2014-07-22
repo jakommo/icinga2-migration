@@ -53,11 +53,6 @@ class Icinga2Host extends Icinga2ObjectDefinition
         'process_perf_data' => 'enable_perfdata',
         'notifications_enabled' => 'enable_notifications',
         'is_volatile' => 'volatile',
-
-
-        //legacy attributes (nagios2)
-        'normal_check_interval' => 'check_interval',
-        'retry_check_interval' => 'retry_interval',
     );
 
     protected $v1RejectedAttributeMap = array(

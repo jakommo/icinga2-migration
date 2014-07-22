@@ -487,6 +487,16 @@ class Icinga2ObjectDefinition
         }
     }
 
+    //legacy 1.x deprecated
+    protected function convertNormal_check_interval($value)
+    {
+        $this->check_interval = $value.'m';
+    }
+    protected function convertRetry_check_interval($value)
+    {
+        $this->retry_interval = $value.'m';
+    }
+
     //generic conversion functions
     protected function convertCheck_interval($value)
     {

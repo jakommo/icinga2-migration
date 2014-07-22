@@ -57,9 +57,6 @@ class Icinga2Service extends Icinga2ObjectDefinition
         'is_volatile' => 'volatile',
         //ugly hacks
         'name' => 'service_description',
-        //legacy attributes (nagios2)
-        'normal_check_interval' => 'check_interval',
-        'retry_check_interval' => 'retry_interval',
     );
 
     protected $v1RejectedAttributeMap = array(
