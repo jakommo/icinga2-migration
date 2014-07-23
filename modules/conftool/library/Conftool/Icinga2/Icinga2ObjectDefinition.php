@@ -1048,11 +1048,11 @@ object NotificationCommand "migration-notification-command" {
             "\$HOSTNOTES\$" => "\$host.notes\$",
             "\$HOSTNOTESURL\$" => "\$host.notes_url\$",
             "\$HOSTACTIONURL\$" => "\$host.action_url\$",
-            "\$TOTALSERVICES\$" => "\$host.num_services\$",
-            "\$TOTALSERVICESOK\$" => "\$host.num_services_ok\$",
-            "\$TOTALSERVICESWARNING\$" => "\$host.num_services_warning\$",
-            "\$TOTALSERVICESUNKNOWN\$" => "\$host.num_services_unknown\$",
-            "\$TOTALSERVICESCRITICAL\$" => "\$host.num_services_critical\$",
+            "\$TOTALHOSTSERVICES\$" => "\$host.num_services\$",
+            "\$TOTALHOSTSERVICESOK\$" => "\$host.num_services_ok\$",
+            "\$TOTALHOSTSERVICESWARNING\$" => "\$host.num_services_warning\$",
+            "\$TOTALHOSTSERVICESUNKNOWN\$" => "\$host.num_services_unknown\$",
+            "\$TOTALHOSTSERVICESCRITICAL\$" => "\$host.num_services_critical\$",
             //command
             "\$COMMANDNAME\$" => "\$command.name\$",
             //notification
@@ -1086,8 +1086,11 @@ object NotificationCommand "migration-notification-command" {
         $line = preg_replace('/\$_HOST(\w+)\$/', '\$host.vars.$1\$', $line);
         $line = preg_replace('/\$_SERVICE(\w+)\$/', '\service.vars.$1\$', $line);
 
-        //TODO if there is still a $...$ string in there, warn the user.
-        //EVENTSTARTTIME
+        //if there is still a $...$ string in there, warn the user.
+        //e.g.: $EVENTSTARTTIME$
+        if (preg_match('/\$(\w+)\$/', $line, $macro_names)) {
+            sprintf("//WARNING: Cannot convert macro '$%s$'. Manual migration required.", $macro_names[0]);
+        }
 
         return $line;
     }
