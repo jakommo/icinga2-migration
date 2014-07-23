@@ -69,6 +69,13 @@ class Icinga2Dependency extends Icinga2ObjectDefinition
     //child host
     protected function convertDependent_host_name($value) {
         $arr = $this->splitComma($value);
+
+        //single host does not require apply
+        if (count($arr) == 1) {
+            $this->child_host_name = $this->migrateLegacyString($value);
+            return;
+        }
+
         $this->is_apply = true;
 
         foreach ($arr as $hostname) {
@@ -99,9 +106,20 @@ class Icinga2Dependency extends Icinga2ObjectDefinition
     //child service
     protected function convertDependent_service_description($value) {
         $arr = $this->splitComma($value);
+
+        //single service does not require apply
+        if (count($arr) == 1) {
+            if (array_key_exists('dependent_host_name', $this->properties)) {
+                $this->child_host_name = $this->migrateLegacyString($this->dependent_host_name);
+            }
+            $this->child_service_name = $this->migrateLegacyString($value);
+            return;
+        }
+
         $this->is_apply = true;
         $this->apply_target = "Service";
 
+        //TODO: build (h1 || h2) && (s1 || s2 || s3)
         foreach ($arr as $servicename) {
             if (substr($servicename, 0, 1) === '!') {
                 $servicename = substr($servicename, 1);
