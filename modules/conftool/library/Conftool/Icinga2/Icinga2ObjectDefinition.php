@@ -720,7 +720,7 @@ class Icinga2ObjectDefinition
         $str = '';
         foreach ($this->properties as $key => $val) {
             if (is_array($val)) {
-                $val = $this->renderArray($val);
+                $val = $this->arrayToString($val); //array values must be escaped properly already!
             }
             $str .= sprintf("    %s = %s\n", $key, $val);
         }

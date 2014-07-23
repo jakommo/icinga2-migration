@@ -78,10 +78,6 @@ class Icinga2Service extends Icinga2ObjectDefinition
         'notification_options'
     );
 
-    // TODO: Figure out how to handle
-    // - notification_interval, first_notification_delay, notification_period, notification_options
-    // in a new notification object
-
     protected function convertHost_name($name)
     {
         $arr = $this->splitComma($name);
