@@ -45,6 +45,7 @@ class Icinga2ObjectDefinition
     protected $_parents = array();
     protected $is_template = false;
     protected $is_apply = false;
+    protected $groups_additive = false;
     protected $apply_target = "Host";
     protected $assigns = array();
     protected $ignores = array();
@@ -481,6 +482,24 @@ class Icinga2ObjectDefinition
         foreach ($object->getCustomVars() as $key => $value) {
             $key = substr($key, 1); //drop _
             $this->vars($key, $value);
+        }
+    }
+
+    protected function migrateGroups($groups)
+    {
+        foreach ($this->splitComma($groups) as $group) {
+            //additive?
+            if (substr($group, 0, 1) === '+') {
+                $group = substr($group, 1);
+                $this->groups_additive = true;
+            }
+
+            if (substr($group, 0, 1) === '!') {
+                $group = substr($group, 1);
+                continue; //ignore the group
+            }
+
+            $this->properties['groups'][] = $this->migrateLegacyString($group);
         }
     }
 

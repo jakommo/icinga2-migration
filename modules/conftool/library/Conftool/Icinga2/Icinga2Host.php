@@ -33,17 +33,12 @@ class Icinga2Host extends Icinga2ObjectDefinition
 {
     protected $type = 'Host';
 
-    protected $v1ArrayProperties = array(
-        'hostgroups',
-    );
-
     protected $v1AttributeMap = array(
         //keep
         'icon_image_alt' => 'icon_image_alt',
         'max_check_attempts' => 'max_check_attempts',
         //rename
         'alias' => 'display_name',
-        'hostgroups' => 'groups',
         'active_checks_enabled' => 'enable_active_checks',
         'passive_checks_enabled' => 'enable_passive_checks',
         'event_handler_enabled' => 'enable_event_handler',
@@ -83,6 +78,11 @@ class Icinga2Host extends Icinga2ObjectDefinition
 
     protected function convertAddress6($string) {
         $this->address6 = $this->migrateLegacyString($string);
+    }
+
+    protected function convertHostgroups($groups)
+    {
+        $this->migrateGroups($groups);
     }
 
     // TODO

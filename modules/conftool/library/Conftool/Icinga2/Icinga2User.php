@@ -34,7 +34,6 @@ class Icinga2User extends Icinga2ObjectDefinition
     protected $type = 'User';
 
     protected $v1ArrayProperties = array(
-        'contactgroups',
         'service_notification_commands',
         'host_notification_commands'
     );
@@ -81,5 +80,10 @@ class Icinga2User extends Icinga2ObjectDefinition
         if (count($notification_filter['type']) > 0) {
             $this->types = $this->arrayToString($notification_filter['type']); //constants, no strings
         }
+    }
+
+    protected function convertContactgroups($groups)
+    {
+        $this->migrateGroups($groups);
     }
 }

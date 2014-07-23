@@ -35,17 +35,12 @@ class Icinga2Service extends Icinga2ObjectDefinition
 {
     protected $type = 'Service';
 
-    protected $v1ArrayProperties = array(
-        'servicegroups',
-    );
-
     protected $v1AttributeMap = array(
         //keep
         'icon_image_alt' => 'icon_image_alt',
         'max_check_attempts' => 'max_check_attempts',
         //rename
         'alias' => 'display_name',
-        'servicegroups' => 'groups',
         'active_checks_enabled' => 'enable_active_checks',
         'passive_checks_enabled' => 'enable_passive_checks',
         'event_handler_enabled' => 'enable_event_handler',
@@ -123,5 +118,10 @@ class Icinga2Service extends Icinga2ObjectDefinition
                 $this->assignWhere($this->migrateLegacyString($hostgroupname) . ' in host.groups');
             }
         }
+    }
+
+    protected function convertServicegroups($groups)
+    {
+        $this->migrateGroups($groups);
     }
 }

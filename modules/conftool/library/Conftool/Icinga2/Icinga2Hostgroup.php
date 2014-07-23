@@ -33,13 +33,8 @@ class Icinga2Hostgroup extends Icinga2ObjectDefinition
 {
     protected $type = 'HostGroup';
 
-    protected $v1ArrayProperties = array(
-        'hostgroup_members',
-    );
-
     protected $v1AttributeMap = array(
         'alias'             => 'display_name',
-        'hostgroup_members' => 'groups',
     );
 
     protected $v1RejectedAttributeMap = array(
@@ -56,5 +51,10 @@ class Icinga2Hostgroup extends Icinga2ObjectDefinition
                 $this->assignWhere('host.name == ' . $this->migrateLegacyString($member));
             }
         }
+    }
+
+    protected function convertHostgroup_members($groups)
+    {
+        $this->migrateGroups($groups);
     }
 }

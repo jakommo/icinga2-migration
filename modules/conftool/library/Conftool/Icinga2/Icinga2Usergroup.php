@@ -33,13 +33,8 @@ class Icinga2Usergroup extends Icinga2ObjectDefinition
 {
     protected $type = 'UserGroup';
 
-    protected $v1ArrayProperties = array(
-        'contactgroup_members',
-    );
-
     protected $v1AttributeMap = array(
         'alias'             => 'display_name',
-        'contactgroup_members' => 'groups',
     );
 
     protected function convertMembers($members)
@@ -52,5 +47,10 @@ class Icinga2Usergroup extends Icinga2ObjectDefinition
                 $this->assignWhere('user.name == ' . $this->migrateLegacyString($member));
             }
         }
+    }
+
+    protected function convertContactgroup_members($groups)
+    {
+        $this->migrateGroups($groups);
     }
 }

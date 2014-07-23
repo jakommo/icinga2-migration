@@ -33,13 +33,8 @@ class Icinga2Servicegroup extends Icinga2ObjectDefinition
 {
     protected $type = 'ServiceGroup';
 
-    protected $v1ArrayProperties = array(
-        'servicegroup_members',
-    );
-
     protected $v1AttributeMap = array(
         'alias'             => 'display_name',
-        'servicegroup_members' => 'groups',
     );
 
     protected $v1RejectedAttributeMap = array(
@@ -68,5 +63,10 @@ class Icinga2Servicegroup extends Icinga2ObjectDefinition
                 $this->assignWhere('host.name == ' . $this->migrateLegacyString($host) . ' && service.name == ' . $this->migrateLegacyString($service));
             }
         }
+    }
+
+    protected function convertServicegroup_members($groups)
+    {
+        $this->migrateGroups($groups);
     }
 }
