@@ -517,7 +517,7 @@ class IcingaConfig
                     }
                 }
             } else {
-                printf('Cannot assign service "%s" to host "%s"\n"', $service, $host);
+                printf('//ERROR: Cannot assign service "%s" to host "%s"\n"', $service, $host);
             }
         }
         foreach (array_unique($hostgroups) as $hostgroup) {
@@ -535,11 +535,11 @@ class IcingaConfig
                     $this->definitions['hostgroup'][$hostgroup]->blacklistService($service);
                 }
             } else {
-                printf('Cannot assign service "%s" to hostgroup "%s"', $service, $hostgroup);
+                printf('//ERROR: Cannot assign service "%s" to hostgroup "%s"', $service, $hostgroup);
             }
         }
         if (! $assigned) {
-            echo 'Unassigned service: ' . print_r($service, 1);
+            echo "Unassigned service: '" . (string) $service . "'.";
         }
     }
 

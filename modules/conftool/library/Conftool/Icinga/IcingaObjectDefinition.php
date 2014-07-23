@@ -136,7 +136,7 @@ abstract class IcingaObjectDefinition
             } elseif ($this->{$this->key}) {
                return $this->{$this->key};
             } else {
-               echo "FOOBAR: no key found. but template.";
+               echo "//ERROR: Template: no key found ('name' or '".$this->key."') for type '".$this->getDefinitionType()."'.\n";
                var_dump($this);
                return null; // Will fail badly
             }
@@ -146,7 +146,7 @@ abstract class IcingaObjectDefinition
             } elseif ($this->name) {
                 return $this->name;
             } else {
-                echo "no template: no key/name found.";
+                echo "//ERROR: Object: no key found ('name' or '".$this->key."') for type '".$this->getDefinitionType()."'.\n";
                 var_dump($this);
                 return null; // Will fail badly
             }
